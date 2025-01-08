@@ -40,7 +40,7 @@ count--;
 count += 2;
 count *= 3;
 
-let x = 2, y = 3; 
+x = 2, y = 3; 
 
 x === y
 x !== y
