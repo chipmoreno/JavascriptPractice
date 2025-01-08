@@ -9,4 +9,5 @@ let my = {
     ]
 };
 
-typeof my.functions[function];
+let result = my.functions[0](5); // Call the first function with argument 5
+console.log(typeof result); // Output the type of the returned value
