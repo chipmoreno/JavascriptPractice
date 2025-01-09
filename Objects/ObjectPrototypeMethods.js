@@ -119,3 +119,91 @@ let dimensions = { width: 100, height: 75 };
 let rect = { ...position, ...dimensions };
 
 rect.width + rect.height // 175
+
+// Shorthand Method example:
+
+let square = {
+    area() { return this.side * this.side; }, 
+    side: 10
+    };
+    square.area() // => 100
+
+// area: function() { ... }, function() now omitted
+
+const METHOD_NAME = "m";
+const symbol = Symbol();
+let weirdMethods = {
+    "method with Spaces"(x) {return x + 1; },
+    [METHOD_NAME](x) { return x + 2 },
+    [symbol](x) { return x + 3; } 
+};
+weirdMethods["method With Spaces"](1) // 2
+weirdMethods[METHOD_NAME](1) // 3
+weirdMethods[symbol](1) // 4
+
+/* Property Getters and Setters
+
+Getter and Setter definitions are prefixed with get or set.*/
+
+let o4 = {
+    dataProp: value,
+    get accessorProp(){ return this.dataProp; },
+    set accessorProp(value) { this.dataProp = value; }
+}
+
+// Interesting example representing 2D Cartesian point
+
+let p3 = {
+    x: 1.0,
+    y: 1.0,
+
+    get r() { return Math.hypot(this.x, this.y); },
+    set r(newvalue) {
+        let oldvalue = Math.hypot(this.x, this.y);
+        let ratio = newvalue/oldvalue;
+        this.x *= ratio;
+        this.y *= ratio;
+    },
+    get theta() { return Math.atan2(this.y, this.x);}
+};
+p3.r // Math.SQRT2
+p3.theta // Math.PI / 4
+
+// Accessor properties are inherited so you can use object
+// p3 as a prototype for other points. You can give new
+// objects their own x and y properties and they'll inherit
+// r and theta properties. 
+
+let q = Object.create(p3);
+q.x = 3; q.y = 4;
+q.r // 5
+q.theta // Math.atan2(4, 3)
+
+// Other reason to use accessor properties include
+// sanity checking of property writes and returning
+// different values on each property read:
+
+const serialnum = {
+    // This property holds next serial num
+    // the _ hints it is for internal use only
+    _n: 0,
+    get next() { return this._n++; },
+    set next(n){
+        if (n > this._n) this._n = n;
+        else throw new Error("serial can only be set to larger value");
+    }
+};
+
+serialnum.next = 10;
+serialnum.next
+serialnum.next // 11: different value each tiem we get next
+
+// Following object has accessor properties returning random
+// numbers. random.octet yeidls random number between 0 and 255
+// every evaluation.
+
+const random = {
+    get octet() { return Math.floor(Math.random()*256); },
+    get uint16() {return Math.floor(Math.random()*65536); },
+    get int16() {return Math.floor(Math.random()*65536) -32768; },
+}
