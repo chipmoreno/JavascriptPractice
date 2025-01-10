@@ -87,3 +87,119 @@ console.log(a)
 // if end is negative, it is treated as length + end. in this case
 // length is 4. confusing
 
+// copyWithin(): copise slice of an array to 
+// new position within that array
+/* modififies array in place, and 
+returns modified array, but does not change length
+first arg specifies destination index to which first element
+will be copied 
+second arg specifies current index of element ot be copied
+
+third arg specifies end of slice of elements to be copied
+
+copyWithin(destination, beginningSource, endSource)
+
+// if third arg omitted, length of array is used */
+
+a = [1,2,3,4,5];
+a.copyWithin(1) // [1,1,2,3,4]
+a.copyWithin(2,3,5) //[1,1,3,4,4]
+a.copyWithin(0,-2) // [4,4,3,4,4]
+
+/* indexOf() - search array for element with value, return
+index of first such element found or -1 if no element found 
+searches array from beginning to end, lastIndexOf() searches from
+end to beginning */
+
+a = [0,1,2,1,0];
+a.indexOf(1) // 1: a[1] is 1
+a.lastIndexOf(1) // 3: a[3] is 1
+a.indexOf(3) // -1: does not exist
+
+// Find all occurences of x in array, return array
+// of matching indexes:
+
+a = [1,2,5,3,5,6,5,7,8,5,10]
+
+// indexOf/lastIndexOf take optional second arg
+// specifies index where to begin
+
+function findall(a, x){ // a = array, x = 5
+    let results = [],
+    len = a.length, // 11
+    pos = 0; // 0
+    while (pos < len) // while 0 < 11
+    {pos=a.indexOf(x, pos); // = a.indexOf(search for 5, start at 0, then index 3)
+        if (pos === -1) break; // if no 5, break
+        results.push(pos) // pos = 2
+        pos = pos+1; // post = 3, still less than 11, restart
+    }
+    return results // 2, 4, 6, 9
+}
+
+console.log(findall(a, 5))
+
+// includes() takes single arg, returns true if array contains
+/* value, false otherwise - does not tell you index
+// includes can find NaN but indexOf cannot
+*/
+let a = [1,true,3,NaN]; 
+a.includes(true) // true
+a.includes(2) //false
+a.includes(NaN) //true
+a.indexOf(NaN) // -1, cannot find
+
+// sort(): when called with no arg, sorts array elements in
+// alphabetical order 
+
+a = ["banana", "cherry", "apple"]; 
+a.sort(); 
+// a == ["apple", "banana", "cherry"]
+
+a = [33, 4, 1111, 222];
+a.sort(); //// a == [1111, 222, 33, 4]
+
+a = [33, 4, 111, 222];
+a.sort(); // a == [1111, 222, 33, 4]; alphabetical order
+a.sort(function(a,b){
+    return a -b; // returns < 0, 0, or > 0, depending on order
+});
+
+a.sort((a,b) => b-a); // a = 1111, 222, 33, 4, reverse order
+
+// case insensitive sort:
+
+a = ["ant", "Bug", "cat", "Dog"];
+a.sort(); // ["Bug","Dog","ant","cat"]
+a.sort(function(s,t){
+    let a = s.toLowerCase();
+    let b = t.toLowerCase();
+    if (a<b) return -1;
+    if(a>b) return 1;
+    return 0;
+}) //a = ["ant","Bug","cat","Dog"];
+
+// reverse() - rearranges items in array, mutates existing array
+a = [1,2,3]
+a.reverse(); // a = [3,2,1]
+
+// join() - converts elements of array to strings and concatenates
+// returns resulting string. takes parameter of delimiter
+
+a = [1,2,3];
+a.join() // "1,2,3"
+a.join(" ")// 1 2 3
+a.join("") //123
+let b = new Array(10);
+b.join("-") // "---------": a string of 9 hyphens
+
+// Output of join() does not include square brackets or any
+// delimiter around array value.
+
+// Static functions include Array.of(), Array.from(), and
+// Array.isArray() to check if an unknown value is an array:
+
+a = [1,2,3]
+Array.isArray(a) // true
+Array.isArray({}) // false
+
