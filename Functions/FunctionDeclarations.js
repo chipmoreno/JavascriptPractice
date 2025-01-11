@@ -100,3 +100,47 @@ calculator.result // 2
 o["m"](x,y) // Another way to write o.m(x,y)
 a[0](z)
 
+customer.surname.toUpperCase() // Complex property access method
+f().m() // invoke m() on return of f()
+
+// this keyword
+
+// nested functions do not inherit the this value of
+/* containing function
+
+Nested Func Invoked As Method: "this" === object invoked on.
+
+Nested Function (NOT =>) invoked, "this" === global obj or undefined
+
+Nested Func defined within method, invoked, can NOT use "this"
+to obtain invocation context! "self" is the outer context, while
+"this" is global or undefined. */
+
+let o = {
+    m: function() {
+        let self = this; // Setting "this" to variable.
+        this === o // True: "this" points to object o.
+        f() // Calling Nested function.
+
+        function f(){ 
+            this === o // F: "this" === global/undefined.
+            self === o // T: "self" === outer "this" === o
+        }
+    }
+}
+
+// HOWEVER: A Nested Arrow Function would properly inherit "this"
+
+const f1 = () => {
+    this === o // true, since arrow functions inherit this
+};
+
+// Another method: invoke bind() method of nested 
+// function to define new function that is implicitly invoked
+// on specified object:
+
+const f2 = (function(){
+    this === o 
+    // True, since we bound this function to the outer "this"
+}).bind(this);
+
