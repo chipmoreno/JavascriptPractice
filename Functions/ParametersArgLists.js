@@ -108,3 +108,13 @@ function vectorAdd(
     return { x: x1 + x2, y: y1 + y2 };
 }
 vectorAdd({x:1,y:2},{x:3,y:4}) // x: 4, y 6
+
+
+// Ex. return different int each time it is called
+// uses property of itself to remember next vzlue
+uniqueInteger.counter = 0;
+function uniqueInteger() {
+    return uniqueInteger.counter++;
+}
+console.log(uniqueInteger())
+console.log(uniqueInteger())
