@@ -143,4 +143,36 @@ console.log(o.getName());
 function constfunc(v) {return () => v; }
 let funcs = [];
 for(var i = 0; i < 10; i++) funcs[i] = constfunc(i);
+// function at array element 5 returns value 5
 funcs[5]()
+
+// Common error: moving loop within function
+// defining closures
+
+// Example of error
+
+function constfuncs(){              // Declares function
+    let funcs = [];                 // Declares array
+    for(var i = 0; i < 10; i++){       // For loop
+        funcs[i] = () => i;         // funcs[0] = 0
+                                    // Loop 2: funcs[1] = 1, funcs[0] = i = 1
+                                    // Loop 10: funcs[1-10] = i = 10
+    }
+    return funcs;                   // return array
+}
+let funcs1 = constfuncs();          // Instantation...
+funcs1[5]() // => 10
+
+// The above creates 10 closures, stores them in array
+// Closures are all defined within the same invocation, so
+// they share access to the same variable i
+
+// When constfuncs() returns, i is 10 and all 10 closures share
+// this value
+
+// The scope associated with a closure is live. Nested functions
+// do not make private scope copies. Variables declared with var
+// are defined throughout the function. 
+
+// Replace var with let or const and the problem goes away.
+
