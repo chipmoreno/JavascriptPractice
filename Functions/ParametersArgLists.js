@@ -118,3 +118,22 @@ function uniqueInteger() {
 }
 console.log(uniqueInteger())
 console.log(uniqueInteger())
+
+// factorial() function using properties of itself
+// to cache previously computed results:
+
+function factorial(n){ // Defining function
+
+    if (Number.isInteger(n) && n > 0){ // If N is int > 0:
+        if (!(n in factorial)){ // Is n not in factorial array?
+            factorial[n] = n * factorial(n-1); // If not, fac[n] = 
+            // n * fac(n-1)
+        }
+        return factorial[n];
+    } else {
+        return NaN;
+    }
+}
+factorial[1] = 1;
+console.log(factorial(6))
+
