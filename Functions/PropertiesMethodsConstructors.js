@@ -33,3 +33,10 @@ let g = f.bind(o);
 let p = { x: 10, g }
 p.g(2) // 3: g still bound to o, not p
 
+// example of Function() constructor:
+
+const f = new Function("x","y","return x*y");
+
+// The above is equivalent to:
+
+const f = function(x,y){return x*y;};w
