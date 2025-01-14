@@ -40,3 +40,19 @@ const f = new Function("x","y","return x*y");
 // The above is equivalent to:
 
 const f = function(x,y){return x*y;};w
+
+// Function() does not use lexical scoping
+// always compiled as if they were top level functions
+
+let scope = "global";
+function constructFunction(){
+    let scope = "local";
+    return new Function("return scope");
+    // doesn't capture local scope
+}
+
+// this returns global because function returned by Function() constructor
+// does not use local scope
+
+console.log(constructFunction());
+
