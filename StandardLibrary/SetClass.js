@@ -19,3 +19,11 @@ for(let p of oneDigitPrimes){
     sum+=p;
 }
 console.log(sum)
+
+// Set class also implements forEach() similar to array method:
+
+let product = 1;
+oneDigitPrimes.forEach(n => {product*=n;});
+console.log(product)
+
+
